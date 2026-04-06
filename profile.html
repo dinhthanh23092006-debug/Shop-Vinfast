@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thông tin cá nhân | VinFast</title>
+  <link rel="stylesheet" href="css/style.css?v=1.1">
+  <style>
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    .profile-section {
+      padding: 120px 0 60px;
+      min-height: calc(100vh - 300px);
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    @media(max-width: 768px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+    }
+
+    .profile-avatar-wrap {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar-big {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c2ff, #0070f3);
+      color: white;
+      font-size: 40px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 10px 25px rgba(0, 194, 255, 0.3);
+    }
+
+    .profile-name-text {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .profile-email-text {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .order-history-list {
+      margin-top: 20px;
+    }
+
+    .order-empty {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="main-header" class="scrolled">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="images/vinfast_logo.png" alt="VinFast" class="logo-img">
+        </a>
+        <nav class="nav-links">
+          <a href="index.html#hero" data-i18n="nav_home">Trang chủ</a>
+          <a href="index.html#products" data-i18n="nav_products">Sản phẩm</a>
+          <a href="index.html#compare" data-i18n="nav_compare">So sánh</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Liên hệ</a>
+        </nav>
+        <div class="header-actions">
+          <button id="lang-toggle" class="lang-btn">EN</button>
+          <button class="cart-btn" onclick="openCart()" aria-label="Giỏ hàng">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+              <path
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M10 21a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
+            </svg>
+            <span id="cart-badge">0</span>
+          </button>
+          <button id="nav-login-btn" class="btn btn-outline btn-sm" onclick="openAuthModal('login')"
+            data-i18n="nav_login">Đăng nhập</button>
+          <button id="nav-reg-btn" class="btn btn-primary btn-sm" onclick="openAuthModal('register')"
+            data-i18n="nav_register">Đăng ký</button>
+          <div id="nav-user-menu" style="display:none;align-items:center;gap:12px;position:relative">
+            <div class="user-avatar" id="user-avatar-letter">U</div>
+            <span id="nav-username"></span>
+            <a href="profile.html" class="btn btn-outline btn-sm active"
+              style="padding:4px 10px;font-size:12px;border-radius:6px;text-decoration:none;margin-right:8px"
+              data-i18n="nav_profile">Hồ sơ</a>
+            <button class="logout-btn" onclick="handleProfileLogout()" data-i18n="nav_logout">Đăng xuất</button>
+          </div>
+        </div>
+        <button id="hamburger-btn" class="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu">
+    <a href="index.html#hero" data-i18n="nav_home">Trang chủ</a>
+    <a href="index.html#products" data-i18n="nav_products">Sản phẩm</a>
+    <a href="index.html#compare" data-i18n="nav_compare">So sánh</a>
+    <a href="index.html#contact" data-i18n="nav_contact">Liên hệ</a>
+    <div class="mobile-actions">
+      <button id="lang-toggle-mobile" class="lang-btn"
+        onclick="AppState.setLang(AppState.lang==='vi'?'en':'vi')">EN</button>
+      <button id="mob-login-btn" class="btn btn-outline btn-sm" onclick="openAuthModal('login')"
+        data-i18n="nav_login">Đăng nhập</button>
+      <button id="mob-reg-btn" class="btn btn-primary btn-sm" onclick="openAuthModal('register')"
+        data-i18n="nav_register">Đăng ký</button>
+      <div id="mob-user-actions" style="display:none; gap:10px;">
+        <a href="profile.html" class="btn btn-outline btn-sm active" data-i18n="nav_profile">Hồ sơ</a>
+        <button class="btn btn-ghost btn-sm" onclick="handleProfileLogout()" data-i18n="nav_logout">Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE SECTION -->
+  <section class="profile-section">
+    <div class="container">
+      <div class="text-center animate-on-scroll">
+        <h2 class="section-title text-gradient" data-i18n="profile_title">Thông tin cá nhân</h2>
+      </div>
+
+      <div class="profile-grid">
+        <!-- Cột Trái: Avatar & Tóm tắt -->
+        <div class="profile-card animate-on-scroll" style="align-self: start;">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar-big" id="prof-avatar-letter">U</div>
+            <div class="profile-name-text" id="prof-display-name">Người dùng</div>
+            <div class="profile-email-text" id="prof-display-email">email@example.com</div>
+          </div>
+        </div>
+
+        <!-- Cột Phải: Form thông tin & Lịch sử -->
+        <div class="profile-body">
+          <div class="profile-card animate-on-scroll" style="margin-bottom: 30px;">
+            <h3
+              style="font-size: 20px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;"
+              data-i18n="profile_info">Thông tin chung</h3>
+            <form id="profile-form">
+              <div class="form-group">
+                <label class="form-label" data-i18n="profile_name">Họ và tên</label>
+                <input type="text" id="prof-name" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="profile_email">Email</label>
+                <input type="email" id="prof-email" class="form-input" disabled
+                  style="opacity: 0.7; cursor: not-allowed;">
+              </div>
+              <button type="submit" class="btn btn-primary" data-i18n="profile_save">Lưu thay đổi</button>
+            </form>
+          </div>
+
+          <div class="profile-card animate-on-scroll">
+            <h3
+              style="font-size: 20px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;"
+              data-i18n="profile_orders">Lịch sử đơn hàng</h3>
+            <div class="order-history-list">
+              <div class="order-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  style="width:48px;height:48px;margin-bottom:16px;opacity:0.5;display:inline-block;">
+                  <path
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13l-1-4M10 21a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
+                </svg>
+                <div data-i18n="profile_no_orders">Chưa có đơn hàng nào.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="images/vinfast_logo.png" alt="VinFast" class="logo-img">
+          </div>
+          <p style="margin-top:12px" data-i18n="footer_slogan">Kiến tạo tương lai – Thuần Việt – Tầm Thế giới</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+            <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>VinFast</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer_about">Giới thiệu</a></li>
+            <li><a href="#" data-i18n="footer_news">Tin tức</a></li>
+            <li><a href="#" data-i18n="footer_careers">Tuyển dụng</a></li>
+            <li><a href="index.html#contact" data-i18n="footer_contact">Liên hệ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ trợ</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer_support">Trung tâm hỗ trợ</a></li>
+            <li><a href="index.html#testdrive">Lái thử xe</a></li>
+            <li><a href="#">Tìm đại lý</a></li>
+            <li><a href="#">Bảo hành</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Pháp lý</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer_policy">Chính sách bảo mật</a></li>
+            <li><a href="#" data-i18n="footer_terms">Điều khoản sử dụng</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy" data-i18n="footer_copy">© 2024 VinFast Auto. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#" data-i18n="footer_policy">Chính sách</a>
+          <a href="#" data-i18n="footer_terms">Điều khoản</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CART SIDEBAR & AUTH (Must be exactly same layout for JS) ===== -->
+  <div id="cart-overlay"></div>
+  <aside id="cart-sidebar">
+    <div class="cart-header">
+      <h2 data-i18n="cart_title">🛒 Giỏ hàng</h2>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div id="cart-body"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label" data-i18n="cart_total">Tổng cộng</span>
+        <span id="cart-total-price">0 đ</span>
+      </div>
+      <button class="btn btn-primary cart-checkout-btn" onclick="showToast('Tính năng thanh toán đang phát triển')"
+        data-i18n="cart_checkout">Thanh toán</button>
+    </div>
+  </aside>
+
+  <!-- We still need auth modal in DOM because app.js might try to open it if user clicks "Đăng nhập" before redirected -->
+  <div id="auth-modal">
+    <div class="auth-box"><button class="auth-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs"><button class="auth-tab-btn active" data-tab="login"
+          onclick="switchAuthTab('login')">...</button></div>
+      <form id="login-form"></form>
+      <form id="reg-form" style="display:none"></form>
+    </div>
+  </div>
+
+  <!-- WIDGETS -->
+  <div id="chat-widget" class="chat-widget">
+    <button class="chat-fab" onclick="toggleChatMenu()">
+      <div class="chat-fab-pulse"></div>
+      <div class="chat-fab-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+          </path>
+        </svg><span class="chat-fab-text" data-i18n="chat_advise">Tư vấn</span></div>
+    </button>
+    <div id="chat-menu" class="chat-menu">
+      <div class="chat-menu-header">
+        <h3 data-i18n="chat_support">Hỗ trợ 24/7</h3><button class="chat-close" onclick="toggleChatMenu()">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=1.1"></script>
+  <script src="js/app.js?v=1.1"></script>
+  <script>
+    function handleProfileLogout() {
+      handleLogout();
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = AppState.user;
+      if (!user) {
+        showToast(t('toast_login_required'), 'error');
+        setTimeout(() => window.location.href = 'index.html', 1000);
+        return;
+      }
+
+      // Populate profile data
+      const nameInput = document.getElementById('prof-name');
+      const emailInput = document.getElementById('prof-email');
+      const dispName = document.getElementById('prof-display-name');
+      const dispEmail = document.getElementById('prof-display-email');
+      const avatarLtr = document.getElementById('prof-avatar-letter');
+
+      if (nameInput) nameInput.value = user.name || '';
+      if (emailInput) emailInput.value = user.email || '';
+      if (dispName) dispName.textContent = user.name || '';
+      if (dispEmail) dispEmail.textContent = user.email || '';
+      if (avatarLtr) avatarLtr.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+
+      const form = document.getElementById('profile-form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const newName = nameInput.value.trim();
+          if (!newName) return;
+
+          // Update users array in localStorage
+          const users = getUsers();
+          const userIndex = users.findIndex(u => u.email === user.email);
+          if (userIndex > -1) {
+            users[userIndex].name = newName;
+            saveUsers(users);
+          }
+
+          // Update AppState
+          user.name = newName;
+          AppState.setUser(user);
+
+          // Update headers and page
+          updateUserUI(); // This will refresh top header
+          dispName.textContent = newName;
+          avatarLtr.textContent = newName.charAt(0).toUpperCase();
+
+          showToast(t('contact_success') || 'Cập nhật thành công!');
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

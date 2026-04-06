@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VinFast – Xe Điện Thông Minh | Kiến Tạo Tương Lai</title>
+<meta name="description" content="VinFast – Thương hiệu xe điện hàng đầu Việt Nam. Khám phá dòng xe điện VF 3, VF 5, VF 6, VF 7, VF 8, VF 9 thông minh, hiện đại, an toàn.">
+<link rel="stylesheet" href="css/style.css?v=1.1">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="main-header">
+  <div class="container"><div class="header-inner">
+    <a href="#" class="logo">
+      <img src="images/vinfast_logo.png" alt="VinFast" class="logo-img">
+    </a>
+    <nav class="nav-links">
+      <a href="#hero" data-i18n="nav_home" class="active">Trang chủ</a>
+      <a href="#products" data-i18n="nav_products">Sản phẩm</a>
+      <a href="#compare" data-i18n="nav_compare">So sánh</a>
+      <a href="#contact" data-i18n="nav_contact">Liên hệ</a>
+    </nav>
+    <div class="header-actions">
+      <button id="lang-toggle" class="lang-btn">EN</button>
+      <button class="cart-btn" onclick="openCart()" aria-label="Giỏ hàng">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M10 21a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span id="cart-badge">0</span>
+      </button>
+      <button id="nav-login-btn" class="btn btn-outline btn-sm" onclick="openAuthModal('login')" data-i18n="nav_login">Đăng nhập</button>
+      <button id="nav-reg-btn" class="btn btn-primary btn-sm" onclick="openAuthModal('register')" data-i18n="nav_register">Đăng ký</button>
+      <div id="nav-user-menu">
+        <div class="user-avatar" id="user-avatar-letter">U</div>
+        <span id="nav-username"></span>
+        <a href="profile.html" class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:12px;border-radius:6px;text-decoration:none;margin-right:8px" data-i18n="nav_profile">Hồ sơ</a>
+        <button class="logout-btn" onclick="handleLogout()" data-i18n="nav_logout">Đăng xuất</button>
+      </div>
+    </div>
+    <button id="hamburger-btn" class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div></div>
+</header>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <a href="#hero" data-i18n="nav_home">Trang chủ</a>
+  <a href="#products" data-i18n="nav_products">Sản phẩm</a>
+  <a href="#compare" data-i18n="nav_compare">So sánh</a>
+  <a href="#contact" data-i18n="nav_contact">Liên hệ</a>
+  <div class="mobile-actions">
+    <button id="lang-toggle-mobile" class="lang-btn" onclick="AppState.setLang(AppState.lang==='vi'?'en':'vi')">EN</button>
+    <button id="mob-login-btn" class="btn btn-outline btn-sm" onclick="openAuthModal('login')" data-i18n="nav_login">Đăng nhập</button>
+    <button id="mob-reg-btn" class="btn btn-primary btn-sm" onclick="openAuthModal('register')" data-i18n="nav_register">Đăng ký</button>
+    <div id="mob-user-actions" style="display:none; gap:10px;">
+      <a href="profile.html" class="btn btn-outline btn-sm" data-i18n="nav_profile">Hồ sơ</a>
+      <button class="btn btn-ghost btn-sm" onclick="handleLogout()" data-i18n="nav_logout">Đăng xuất</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-bg" style="background-image:url('https://cmu-cdn.vinfast.vn/2024/03/13aafffa-img_20240322_091149.jpg')"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">⚡ EV PIONEER – VIETNAM 🇻🇳</div>
+      <h1 class="hero-title">
+        <span data-i18n="hero_slogan">Kiến tạo<br>tương lai</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero_sub">Xe điện thông minh – Trải nghiệm đẳng cấp thế giới</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary" data-i18n="hero_cta1">Khám phá</a>
+        <a href="#testdrive" class="btn btn-outline" data-i18n="hero_cta2">Đặt xe ngay</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">50K+</div>
+          <div class="hero-stat-label" data-i18n="stat_cars">Xe đã bán</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">12+</div>
+          <div class="hero-stat-label" data-i18n="stat_countries">Quốc gia</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">98%</div>
+          <div class="hero-stat-label" data-i18n="stat_satisfaction">Hài lòng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-dot"></div>Scroll</div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section id="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-number" data-target="50000" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stat_cars">Xe đã bán</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-number" data-target="12" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stat_countries">Quốc gia</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-number" data-target="150" data-suffix="+">0</div>
+        <div class="stat-label" data-i18n="stat_dealers">Đại lý</div>
+      </div>
+      <div class="stat-card animate-on-scroll">
+        <div class="stat-number" data-target="98" data-suffix="%">0</div>
+        <div class="stat-label" data-i18n="stat_satisfaction">Hài lòng</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<section id="products" class="section">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <h2 class="section-title text-gradient" data-i18n="products_title">Dòng xe VinFast</h2>
+      <p class="section-sub" data-i18n="products_sub">Bộ sưu tập xe điện VinFast – Tiên phong công nghệ xanh</p>
+    </div>
+    <div id="products-grid"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text animate-on-scroll">
+        <h2 class="section-title" data-i18n="about_title">Về VinFast</h2>
+        <p data-i18n="about_desc">VinFast là thương hiệu ô tô điện tiên phong của Việt Nam, thuộc tập đoàn Vingroup. Với sứ mệnh mang lại xe điện thông minh, an toàn và thân thiện môi trường, VinFast đang vươn tầm ra thị trường quốc tế.</p>
+        <div class="about-features">
+          <div class="about-feature"><div class="about-feature-icon">⚡</div><div class="about-feature-title">Công nghệ xanh</div><div class="about-feature-desc">100% xe điện, không khí thải</div></div>
+          <div class="about-feature"><div class="about-feature-icon">🔋</div><div class="about-feature-title">Phạm vi dài</div><div class="about-feature-desc">Lên đến 568km/sạc</div></div>
+          <div class="about-feature"><div class="about-feature-icon">🛡️</div><div class="about-feature-title">An toàn tuyệt đối</div><div class="about-feature-desc">Đạt chuẩn an toàn 5 sao</div></div>
+          <div class="about-feature"><div class="about-feature-icon">🌍</div><div class="about-feature-title">Thương hiệu toàn cầu</div><div class="about-feature-desc">Xuất khẩu 12+ quốc gia</div></div>
+        </div>
+      </div>
+      <div class="about-visual animate-on-scroll">
+        <img src="images/vf8.png" alt="VinFast VF 8" style="width:100%;border-radius:20px;filter:drop-shadow(0 20px 40px rgba(0,194,255,.25))">
+        <div class="about-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARE ===== -->
+<section id="compare" class="section">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <h2 class="section-title" data-i18n="compare_title">So sánh xe</h2>
+      <p class="section-sub" data-i18n="compare_sub">Chọn 2–3 xe để so sánh thông số</p>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
+      <select id="compare-select" class="form-input" style="max-width:240px"><option>Chọn xe...</option></select>
+      <button class="btn btn-primary" onclick="goCompare()" data-i18n="compare_btn">So sánh ngay</button>
+      <button class="btn btn-ghost" onclick="AppState.clearCompare();document.getElementById('compare-section').style.display='none'" data-i18n="compare_clear">Xóa tất cả</button>
+    </div>
+    <div id="compare-section">
+      <table id="compare-table"></table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEST DRIVE ===== -->
+<section id="testdrive" class="section">
+  <div class="container">
+    <div class="testdrive-grid">
+      <div class="animate-on-scroll">
+        <div class="hero-badge" style="margin-bottom:16px">🚗 TEST DRIVE</div>
+        <h2 class="section-title" data-i18n="testdrive_title">Lái thử xe</h2>
+        <p class="section-sub" data-i18n="testdrive_sub">Đăng ký lái thử – Trải nghiệm ngay hôm nay</p>
+        <img src="images/vf7.png" alt="Test Drive" style="width:100%;border-radius:16px;filter:drop-shadow(0 16px 40px rgba(0,194,255,.2));margin-top:20px">
+      </div>
+      <div class="testdrive-form-box animate-on-scroll">
+        <div id="td-success" class="success-msg"></div>
+        <form id="testdrive-form">
+          <div class="form-group">
+            <label class="form-label" data-i18n="testdrive_name">Họ và tên</label>
+            <input id="td-name" type="text" class="form-input" data-i18n-placeholder="testdrive_name" placeholder="Họ và tên" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="testdrive_phone">Số điện thoại</label>
+            <input id="td-phone" type="tel" class="form-input" placeholder="0900 000 000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="testdrive_car">Chọn xe</label>
+            <select id="td-car" class="form-input" required><option value="">-- Chọn dòng xe --</option></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="testdrive_date">Ngày hẹn</label>
+              <input id="td-date" type="date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="testdrive_time">Giờ hẹn</label>
+              <input id="td-time" type="time" class="form-input" value="09:00" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary form-submit" data-i18n="testdrive_submit">Đăng ký lái thử</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section id="reviews">
+  <div class="container">
+    <div class="text-center animate-on-scroll">
+      <h2 class="section-title text-gradient" data-i18n="reviews_title">Khách hàng nói gì</h2>
+    </div>
+    <div class="reviews-grid" style="margin-top:40px">
+      <div class="review-card animate-on-scroll">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"VF 8 vượt quá mong đợi của tôi. Nội thất cao cấp, khả năng lái mượt mà, phạm vi pin ấn tượng. Đây là chiếc xe điện tốt nhất tôi từng trải nghiệm."</p>
+        <div class="review-author"><div class="review-avatar" style="background:linear-gradient(135deg,#00c2ff,#0070f3)">T</div><div><div class="review-name">Trần Minh Tuấn</div><div class="review-model">VinFast VF 8</div></div></div>
+      </div>
+      <div class="review-card animate-on-scroll">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"VF 9 thực sự xứng đáng với tầm giá. 7 chỗ rộng rãi, công nghệ tiên tiến, pin lâu. Cả gia đình tôi đều yêu thích chiếc xe này!"</p>
+        <div class="review-author"><div class="review-avatar" style="background:linear-gradient(135deg,#a855f7,#ec4899)">L</div><div><div class="review-name">Lê Thị Hương</div><div class="review-model">VinFast VF 9</div></div></div>
+      </div>
+      <div class="review-card animate-on-scroll">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"VF 3 hoàn hảo cho đô thị. Nhỏ gọn, dễ đậu xe, tiết kiệm chi phí vận hành. Xe Việt Nam mà chất lượng không thua kém quốc tế."</p>
+        <div class="review-author"><div class="review-avatar" style="background:linear-gradient(135deg,#f0b429,#e8620a)">N</div><div><div class="review-name">Nguyễn Văn Nam</div><div class="review-model">VinFast VF 3</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="animate-on-scroll">
+        <h2 class="section-title" data-i18n="contact_title">Liên hệ với chúng tôi</h2>
+        <p data-i18n="contact_sub">Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+        <div class="contact-items" style="margin-top:28px">
+          <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span>1800 2018 (Miễn phí)</span></div>
+          <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span>dinhthanh23092006@gmail.com</span></div>
+          <div class="contact-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Lý Nhân,Ninh Bình</span></div>
+        </div>
+      </div>
+      <div class="contact-form-box animate-on-scroll">
+        <div id="contact-success" class="success-msg"></div>
+        <form id="contact-form">
+          <div class="form-group">
+            <label class="form-label" data-i18n="contact_name">Họ và tên</label>
+            <input type="text" class="form-input" data-i18n-placeholder="contact_name" placeholder="Họ và tên" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="contact_email">Email</label>
+            <input type="email" class="form-input" data-i18n-placeholder="contact_email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="contact_message">Nội dung</label>
+            <textarea class="form-input" rows="5" data-i18n-placeholder="contact_message" placeholder="Nội dung tin nhắn..." required style="resize:vertical"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary form-submit" data-i18n="contact_submit">Gửi tin nhắn</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="images/vinfast_logo.png" alt="VinFast" class="logo-img">
+        </div>
+        <p style="margin-top:12px" data-i18n="footer_slogan">Kiến tạo tương lai – Thuần Việt – Tầm Thế giới</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+          <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>VinFast</h4>
+        <ul>
+          <li><a href="#" data-i18n="footer_about">Giới thiệu</a></li>
+          <li><a href="#" data-i18n="footer_news">Tin tức</a></li>
+          <li><a href="#" data-i18n="footer_careers">Tuyển dụng</a></li>
+          <li><a href="#contact" data-i18n="footer_contact">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#" data-i18n="footer_support">Trung tâm hỗ trợ</a></li>
+          <li><a href="#testdrive">Lái thử xe</a></li>
+          <li><a href="#">Tìm đại lý</a></li>
+          <li><a href="#">Bảo hành</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pháp lý</h4>
+        <ul>
+          <li><a href="#" data-i18n="footer_policy">Chính sách bảo mật</a></li>
+          <li><a href="#" data-i18n="footer_terms">Điều khoản sử dụng</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="footer_copy">© 2024 VinFast Auto. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#" data-i18n="footer_policy">Chính sách</a>
+        <a href="#" data-i18n="footer_terms">Điều khoản</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== CART SIDEBAR ===== -->
+<div id="cart-overlay"></div>
+<aside id="cart-sidebar">
+  <div class="cart-header">
+    <h2 data-i18n="cart_title">🛒 Giỏ hàng</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div id="cart-body"></div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label" data-i18n="cart_total">Tổng cộng</span>
+      <span id="cart-total-price">0 đ</span>
+    </div>
+    <button class="btn btn-primary cart-checkout-btn" onclick="showToast('Tính năng thanh toán đang phát triển')" data-i18n="cart_checkout">Thanh toán</button>
+  </div>
+</aside>
+
+<!-- ===== AUTH MODAL ===== -->
+<div id="auth-modal">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <div class="auth-logo"><span class="logo-badge" style="font-size:22px;padding:10px 24px;letter-spacing:3px">VinFast</span></div>
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" data-tab="login" onclick="switchAuthTab('login')" data-i18n="auth_login">Đăng nhập</button>
+      <button class="auth-tab-btn" data-tab="register" onclick="switchAuthTab('register')" data-i18n="auth_register">Đăng ký</button>
+    </div>
+    <!-- Login -->
+    <form id="login-form">
+      <div class="form-group"><label class="form-label" data-i18n="auth_email">Email</label><input id="login-email" type="email" class="form-input" placeholder="email@gmail.com" required></div>
+      <div class="form-group"><label class="form-label" data-i18n="auth_password">Mật khẩu</label><input id="login-password" type="password" class="form-input" placeholder="••••••••" required></div>
+      <p id="login-error" class="form-error"></p>
+      <button type="submit" class="btn btn-primary form-submit" data-i18n="auth_submit_login">Đăng nhập</button>
+      <p class="auth-switch" data-i18n="auth_no_acc">Chưa có tài khoản? <a onclick="switchAuthTab('register')">Đăng ký ngay</a></p>
+    </form>
+    <!-- Register -->
+    <form id="reg-form" style="display:none">
+      <div class="form-group"><label class="form-label" data-i18n="auth_name">Họ và tên</label><input id="reg-name" type="text" class="form-input" placeholder="Nguyễn Văn A" required></div>
+      <div class="form-group"><label class="form-label" data-i18n="auth_email">Email</label><input id="reg-email" type="email" class="form-input" placeholder="email@gmail.com" required></div>
+      <div class="form-group"><label class="form-label" data-i18n="auth_password">Mật khẩu</label><input id="reg-password" type="password" class="form-input" placeholder="••••••••" required></div>
+      <div class="form-group"><label class="form-label" data-i18n="auth_confirm">Xác nhận mật khẩu</label><input id="reg-confirm" type="password" class="form-input" placeholder="••••••••" required></div>
+      <p id="reg-error" class="form-error"></p>
+      <button type="submit" class="btn btn-primary form-submit" data-i18n="auth_submit_reg">Tạo tài khoản</button>
+      <p class="auth-switch" data-i18n="auth_have_acc">Đã có tài khoản? <a onclick="switchAuthTab('login')">Đăng nhập</a></p>
+    </form>
+  </div>
+</div>
+
+<div id="configurator-modal">
+  <div class="config-box" style="position:relative">
+    <button class="config-close" onclick="closeConfigurator()">✕</button>
+
+    <!-- LEFT: Preview + Info -->
+    <div class="config-preview">
+      <img id="config-car-img" src="images/vf8.png" alt="Car Preview">
+      <h3 id="config-car-name">VF 8</h3>
+      <p id="config-color-name"></p>
+
+      <!-- Quick Specs Grid -->
+      <div id="config-specs-grid" class="config-specs-grid"></div>
+
+      <!-- Description -->
+      <div class="config-desc-block">
+        <div class="config-section-label" data-i18n="config_desc">Mô tả</div>
+        <p id="config-desc-text" class="config-desc-text"></p>
+      </div>
+
+      <!-- Highlights -->
+      <div class="config-desc-block">
+        <div class="config-section-label" data-i18n="config_highlights">Điểm nổi bật</div>
+        <ul id="config-highlights-list" class="config-highlights-list"></ul>
+      </div>
+    </div>
+
+    <!-- RIGHT: Options -->
+    <div class="config-form">
+      <h2 style="font-size:20px;font-weight:800" data-i18n="config_title">Cấu hình xe</h2>
+
+      <div>
+        <div class="config-section-label" data-i18n="config_color">Màu xe</div>
+        <div id="config-colors" class="color-swatches"></div>
+      </div>
+
+      <div>
+        <div class="config-section-label" data-i18n="config_version">Phiên bản</div>
+        <div id="config-versions" class="version-btns"></div>
+        <p id="config-version-desc" class="config-version-desc"></p>
+      </div>
+
+      <div>
+        <div class="config-section-label" data-i18n="config_battery">Gói pin</div>
+        <div id="config-battery" class="battery-options"></div>
+      </div>
+
+      <div class="config-price-wrap">
+        <div class="config-price-label" data-i18n="config_price">Giá dự kiến</div>
+        <div id="config-price">0 đ</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;border-radius:12px" onclick="addConfigToCart()" data-i18n="config_order">Đặt cọc</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMPARE BAR ===== -->
+<div id="compare-bar">
+  <div id="compare-bar-list"></div>
+  <div class="compare-bar-actions">
+    <button class="btn btn-primary btn-sm" onclick="goCompare()" data-i18n="compare_btn">So sánh ngay</button>
+    <button class="btn btn-ghost btn-sm" onclick="AppState.clearCompare()" data-i18n="compare_clear">Xóa</button>
+  </div>
+</div>
+
+<!-- ===== CHAT WIDGET ===== -->
+<div id="chat-widget" class="chat-widget">
+  <!-- Popup Menu -->
+  <div id="chat-menu" class="chat-menu">
+    <div class="chat-menu-header">
+      <h3 data-i18n="chat_support">Hỗ trợ 24/7</h3>
+      <button class="chat-close" onclick="toggleChatMenu()">✕</button>
+    </div>
+    <div class="chat-menu-body">
+      <a href="tel:0963392741" class="chat-item">
+        <div class="chat-icon phone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </div>
+        <span>0963392741</span>
+      </a>
+      <a href="https://www.messenger.com/e2ee/t/29501870559427008" target="_blank" class="chat-item">
+        <div class="chat-icon mess-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.145 2 11.26c0 2.915 1.536 5.498 3.905 7.155V22l3.565-1.956c.805.228 1.65.352 2.53.352 5.523 0 10-4.145 10-9.26S17.523 2 12 2zm1.09 11.535l-2.73-2.915-5.327 2.915 5.86-6.22 2.768 2.915 5.29-2.915-5.86 6.22z"/></svg>
+        </div>
+        <span>Chat Mess</span>
+      </a>
+      <a href="https://zalo.me/0963392741" target="_blank" class="chat-item">
+        <div class="chat-icon zalo-icon">
+          <span style="font-size:10px;font-weight:900;letter-spacing:0">Zalo</span>
+        </div>
+        <span>Chat Zalo</span>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Floating Button -->
+  <button class="chat-fab" onclick="toggleChatMenu()">
+    <div class="chat-fab-pulse"></div>
+    <div class="chat-fab-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+      <span class="chat-fab-text" data-i18n="chat_advise">Tư vấn</span>
+    </div>
+  </button>
+</div>
+
+<script src="js/data.js?v=1.1"></script>
+<script src="js/app.js?v=1.1"></script>
+</body>
+</html>

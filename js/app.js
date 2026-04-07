@@ -15,20 +15,20 @@ function handleRegister(e) {
   const errEl = document.getElementById('reg-error');
 
   if (!name || !email || !password || !confirm) {
-    errEl.textContent = 'Vui lòng điền đầy đủ thông tin';
+    errEl.textContent = t('auth_err_empty');
     return;
   }
   if (password !== confirm) {
-    errEl.textContent = 'Mật khẩu xác nhận không khớp';
+    errEl.textContent = t('auth_err_match');
     return;
   }
   if (password.length < 6) {
-    errEl.textContent = 'Mật khẩu phải ít nhất 6 ký tự';
+    errEl.textContent = t('auth_err_length');
     return;
   }
   const users = getUsers();
   if (users.find(u => u.email === email)) {
-    errEl.textContent = 'Email đã được sử dụng';
+    errEl.textContent = t('auth_err_email');
     return;
   }
   const user = { name, email, password, id: Date.now() };
@@ -38,7 +38,7 @@ function handleRegister(e) {
   localStorage.setItem('vf_session', email);
   closeAuthModal();
   updateUserUI();
-  showToast('Đăng ký thành công! Chào mừng ' + name);
+  showToast(t('auth_welcome_reg') + name);
 }
 
 function handleLogin(e) {
@@ -50,20 +50,20 @@ function handleLogin(e) {
   const users = getUsers();
   const user = users.find(u => u.email === email && u.password === password);
   if (!user) {
-    errEl.textContent = 'Email hoặc mật khẩu không đúng';
+    errEl.textContent = t('auth_err_invalid');
     return;
   }
   AppState.setUser({ name: user.name, email: user.email, id: user.id });
   localStorage.setItem('vf_session', email);
   closeAuthModal();
   updateUserUI();
-  showToast('Chào mừng, ' + user.name + '!');
+  showToast(t('auth_welcome_login') + user.name + '!');
 }
 
 function handleLogout() {
   AppState.clearUser();
   updateUserUI();
-  showToast('Đã đăng xuất');
+  showToast(t('auth_logout'));
 }
 
 function openAuthModal(tab = 'login') {
@@ -173,7 +173,7 @@ function renderCart() {
     const subtotal = item.unitPrice * item.qty;
     total += subtotal;
     const colorInfo = AppState.lang === 'vi' ? item.color : item.color;
-    const batteryInfo = AppState.lang === 'vi' ? item.battery : item.batteryEn;
+    const batteryInfo = AppState.lang === 'vi' ? item.battery : (item.batteryEn || item.battery);
     return `
     <div class="cart-item" data-index="${i}">
       <img src="${item.image}" alt="${item.name}" class="cart-item-img">
@@ -214,7 +214,7 @@ function renderProducts() {
     <div class="product-card" data-id="${v.id}">
       <div class="product-card-badge">${v.category}</div>
       <div class="product-card-img-wrap">
-        <img src="${v.image}" alt="${v.name}" class="product-card-img" loading="lazy">
+        <img src="${v.image}" alt="${v.name}" class="product-card-img" loading="eager">
       </div>
       <div class="product-card-body">
         <h3 class="product-card-name">${v.name}</h3>
@@ -420,12 +420,15 @@ function removeFromCompareBar(id) {
 
 function goCompare() {
   if (AppState.compareList.length < 2) {
-    showToast('Chọn ít nhất 2 xe để so sánh');
+    showToast(t('toast_compare_min'));
     return;
   }
-  // Scroll to compare sectiondòng thôi
-  document.getElementById('compare-section').scrollIntoView({ behavior: 'smooth' });
-  renderCompareTable();
+  
+  const compareSection = document.getElementById('compare-section');
+  if (compareSection) {
+    compareSection.scrollIntoView({ behavior: 'smooth' });
+    renderCompareTable();
+  }
 }
 
 function renderCompareTable() {
@@ -611,7 +614,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {
-      const target = document.querySelector(link.getAttribute('href'));
+      const href = link.getAttribute('href');
+      if (href === '#') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth' });
@@ -628,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fab = document.querySelector('.chat-fab');
     if (menu && menu.classList.contains('active')) {
       // If click is not inside menu and not on the fab
-      if (!menu.contains(e.target) && !fab.contains(e.target)) {
+      if (!menu.contains(e.target) && (!fab || !fab.contains(e.target))) {
         menu.classList.remove('active');
       }
     }

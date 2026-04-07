@@ -230,20 +230,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Hỗ trợ</h4>
+          <h4 data-i18n="footer_support">Hỗ trợ</h4>
           <ul>
-            <li><a href="#" data-i18n="footer_support">Trung tâm hỗ trợ</a></li>
-            <li><a href="index.html#testdrive">Lái thử xe</a></li>
-            <li><a href="#">Tìm đại lý</a></li>
-            <li><a href="#">Bảo hành</a></li>
+            <li><a href="#" data-i18n="footer_support_center">Trung tâm hỗ trợ</a></li>
+            <li><a href="index.html#testdrive" data-i18n="footer_testdrive">Lái thử xe</a></li>
+            <li><a href="#" data-i18n="footer_dealers">Tìm đại lý</a></li>
+            <li><a href="#" data-i18n="footer_warranty">Bảo hành</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Pháp lý</h4>
+          <h4 data-i18n="footer_legal">Pháp lý</h4>
           <ul>
             <li><a href="#" data-i18n="footer_policy">Chính sách bảo mật</a></li>
             <li><a href="#" data-i18n="footer_terms">Điều khoản sử dụng</a></li>
-            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#" data-i18n="footer_cookie">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
@@ -357,7 +357,7 @@
           dispName.textContent = newName;
           avatarLtr.textContent = newName.charAt(0).toUpperCase();
 
-          showToast(t('contact_success') || 'Cập nhật thành công!');
+          showToast(t('toast_update_success'));
         });
       }
     });
